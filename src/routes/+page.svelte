@@ -59,7 +59,7 @@
 
 		<!-- CTA -->
 		<div class="text-center">
-			<div class="mb-4 text-sm text-slate-600 dark:text-slate-400 max-w-lg mx-auto px-4">
+			<div class="mb-4 text-sm text-slate-600 dark:text-slate-400 mx-auto px-4">
 				We'll access your activities and segments to process the data you select. <a
 					href="https://github.com/rpbritton/uplift-pruner/blob/main/PRIVACY.md"
 					target="_blank"
