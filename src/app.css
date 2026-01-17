@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+html {
+	@apply bg-slate-50 dark:bg-slate-900;
+}
+
+body {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	@apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100;
+}
+
+/* Custom text selection color */
+::selection {
+	@apply bg-primary-500/30;
+	color: inherit;
+}
+
+/* Leaflet map fixes */
+.leaflet-container {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
