@@ -13,6 +13,19 @@ export interface ApiError {
 }
 
 /**
+ * Handle session expiration by clearing cookies and redirecting to landing page
+ */
+export async function handleSessionExpiration(): Promise<void> {
+	toasts.show('Your session has expired. Please log in again.', 'error');
+	// Clear session and cookies
+	await fetch('/api/auth/logout', { method: 'POST' });
+	sessionStorage.clear();
+	setTimeout(() => {
+		window.location.href = '/';
+	}, 500);
+}
+
+/**
  * Parse error from API response or exception
  */
 export async function parseError(error: any): Promise<ApiError> {

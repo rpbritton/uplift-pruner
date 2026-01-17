@@ -24,7 +24,8 @@
 		handleApiError,
 		isTokenExpired,
 		retryWithBackoff,
-		fetchWithTimeout
+		fetchWithTimeout,
+		handleSessionExpiration
 	} from '$lib/utils/errors';
 	import { cachedFetch, CACHE_TTL } from '$lib/utils/cache';
 	import { runUploadWorkflow, type UploadStep } from '$lib/upload-workflow';
@@ -131,8 +132,7 @@
 
 			if (!response.ok) {
 				if (isTokenExpired(response)) {
-					toasts.show('Your session has expired. Please log in again.', 'error');
-					goto('/');
+					await handleSessionExpiration();
 					return;
 				}
 				throw response;
@@ -187,13 +187,9 @@
 			if (!response.ok) {
 				// Check for token expiration
 				if (isTokenExpired(response)) {
-					toasts.show('Your session has expired. Please log in again.', 'error');
-					goto('/');
+					await handleSessionExpiration();
 					return;
 				}
-
-				await handleApiError(response);
-				goto('/select');
 				return;
 			}
 
@@ -309,8 +305,7 @@
 
 			if (!streamsResponse.ok) {
 				if (isTokenExpired(streamsResponse)) {
-					toasts.show('Your session has expired. Please log in again.', 'error');
-					goto('/');
+					await handleSessionExpiration();
 					return;
 				}
 				throw streamsResponse;

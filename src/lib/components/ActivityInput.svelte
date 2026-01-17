@@ -6,7 +6,8 @@
 		handleApiError,
 		retryWithBackoff,
 		fetchWithTimeout,
-		isTokenExpired
+		isTokenExpired,
+		handleSessionExpiration
 	} from '$lib/utils/errors';
 	import { cachedFetch, CACHE_TTL } from '$lib/utils/cache';
 	import { goto } from '$app/navigation';
@@ -40,8 +41,7 @@
 
 			if (!response.ok) {
 				if (isTokenExpired(response)) {
-					toasts.show('Your session has expired. Please log in again.', 'error');
-					goto('/');
+					await handleSessionExpiration();
 					return;
 				}
 				throw response;
@@ -71,8 +71,7 @@
 
 			if (!response.ok) {
 				if (isTokenExpired(response)) {
-					toasts.show('Your session has expired. Please log in again.', 'error');
-					goto('/');
+					await handleSessionExpiration();
 					return;
 				}
 				throw response;
