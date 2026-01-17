@@ -42,14 +42,13 @@ function generateActivityDescription(stats: ActivityStats, useImperial: boolean,
 	// Add original description if it exists
 	if (originalDescription && originalDescription.trim()) {
 		lines.push(originalDescription.trim());
-		lines.push('');
+		lines.push('----------');
 	}
 	
 	// Add stats section - all on one line
-	const statsLine = `${stats.numLaps} laps, ${formatDistance(stats.totalDistance, useImperial)}, ${formatElevation(stats.totalAscent, useImperial)} ascent, ${formatElevation(stats.totalDescent, useImperial)} descent`;
+	const statsLine = `${stats.numLaps} laps, ${formatElevation(stats.totalDescent, useImperial)} descent`;
 	lines.push(statsLine);
-	lines.push('');
-	lines.push('Processed with Uplift Pruner: https://uplift-pruner.rbritton.dev');
+	lines.push('https://uplift-pruner.rbritton.dev');
 	
 	return lines.join('\n');
 }
