@@ -5,35 +5,12 @@
 
 import { fetchWithTimeout } from './utils/errors';
 
-function formatTime(seconds: number): string {
-	const hours = Math.floor(seconds / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	const secs = Math.floor(seconds % 60);
-
-	if (hours > 0) {
-		return `${hours}h ${minutes}m`;
-	} else if (minutes > 0) {
-		return `${minutes}m ${secs}s`;
-	} else {
-		return `${secs}s`;
-	}
-}
-
-function formatDistance(meters: number, useImperial: boolean): string {
-	if (useImperial) {
-		const miles = meters * 0.000621371;
-		return `${miles.toFixed(2)} mi`;
-	}
-	const km = meters / 1000;
-	return `${km.toFixed(2)} km`;
-}
-
 function formatElevation(meters: number, useImperial: boolean): string {
 	if (useImperial) {
 		const feet = meters * 3.28084;
-		return `${Math.round(feet)} ft`;
+		return `${Math.round(feet).toLocaleString()} ft`;
 	}
-	return `${Math.round(meters)} m`;
+	return `${Math.round(meters).toLocaleString()} m`;
 }
 
 function generateActivityDescription(
@@ -85,6 +62,7 @@ export interface UploadCallbacks {
 
 export interface ActivityStats {
 	numLaps: number;
+	numSignificantLaps: number;
 	totalDistance: number;
 	totalAscent: number;
 	totalDescent: number;
@@ -148,8 +126,8 @@ export async function runUploadWorkflow(
 		});
 
 		let isDeleted = false;
-		for (let i = 0; i < 12; i++) {
-			// Check for up to 60 seconds
+		for (let i = 0; i < 6; i++) {
+			// Check for up to 30 seconds
 			onStateChange({
 				message: 'Verifying activity deletion...'
 			});
@@ -164,7 +142,7 @@ export async function runUploadWorkflow(
 				// Ignore errors, keep checking
 			}
 
-			if (i < 11) {
+			if (i < 5) {
 				await new Promise((resolve) => setTimeout(resolve, 5000));
 			}
 		}
@@ -216,9 +194,9 @@ export async function runUploadWorkflow(
 		newActivityId = uploadResult.activityId || null;
 
 		if (!newActivityId) {
-			// Poll for completion (40 seconds max, check every 4s)
-			for (let i = 0; i < 10; i++) {
-				await new Promise((resolve) => setTimeout(resolve, 4000));
+			// Poll for completion (30 seconds max, check every 5s)
+			for (let i = 0; i < 6; i++) {
+				await new Promise((resolve) => setTimeout(resolve, 5000));
 
 				const statusResponse = await fetchWithTimeout(
 					`/api/upload/${uploadResult.uploadId}/status`

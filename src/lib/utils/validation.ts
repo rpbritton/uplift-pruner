@@ -11,21 +11,6 @@ import { z } from 'zod';
 export const activityIdSchema = z.string().regex(/^\d+$/, 'Activity ID must be numeric');
 
 /**
- * Process request validation
- */
-export const processRequestSchema = z.object({
-	activityId: activityIdSchema,
-	selectedSegments: z
-		.array(z.number().int().nonnegative())
-		.min(1, 'At least one segment must be selected')
-		.max(100, 'Too many segments selected'),
-	action: z.enum(['download', 'upload']),
-	format: z.enum(['fit', 'gpx', 'tcx']).optional().default('fit')
-});
-
-export type ProcessRequest = z.infer<typeof processRequestSchema>;
-
-/**
  * Recent activities query validation
  */
 export const recentActivitiesQuerySchema = z.object({
