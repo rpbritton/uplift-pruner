@@ -6,6 +6,6 @@ export const POST: RequestHandler = async ({ cookies }) => {
 	cookies.delete('strava_access_token', { path: '/' });
 	cookies.delete('strava_refresh_token', { path: '/' });
 	cookies.delete('oauth_state', { path: '/' });
-	
+
 	return json({ success: true });
 };

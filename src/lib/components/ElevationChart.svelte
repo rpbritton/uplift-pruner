@@ -25,7 +25,7 @@
 			const ChartModule = await import('chart.js');
 			Chart = ChartModule.Chart;
 			Chart.register(...ChartModule.registerables);
-			
+
 			createChart();
 		})();
 
@@ -49,7 +49,7 @@
 		const segments = selectedSegments;
 		const hovered = hoveredSegment;
 		const currentChart = chart;
-		
+
 		if (!currentChart || indexMap.length === 0 || !activity?.segment_efforts) {
 			return;
 		}
@@ -58,7 +58,7 @@
 		segmentColorMap.clear();
 		const selectedColor = COLORS.selected;
 		const hoverColor = COLORS.hover;
-		
+
 		// Apply selected segments (red)
 		activity.segment_efforts.forEach((segment: any, index: number) => {
 			if (segments.includes(index)) {
@@ -72,7 +72,7 @@
 
 		// Apply hover color (amber) - overrides selection color
 		if (hovered !== null && hovered.length > 0) {
-			hovered.forEach(hoveredIndex => {
+			hovered.forEach((hoveredIndex) => {
 				if (activity.segment_efforts[hoveredIndex]) {
 					const segment = activity.segment_efforts[hoveredIndex];
 					indexMap.forEach((originalIndex, simplifiedIndex) => {
@@ -114,7 +114,7 @@
 		const simplifiedAltitudes = [];
 		const simplifiedDistances = [];
 		indexMap = []; // Track original indices
-		
+
 		for (let i = 0; i < altitudes.length; i += 20) {
 			simplifiedAltitudes.push(altitudes[i]);
 			simplifiedDistances.push(distances[i]);
@@ -135,7 +135,7 @@
 		// Create new chart with base colors as arrays - the $effect will handle segment coloring
 		const baseColors = new Array(simplifiedAltitudes.length).fill(COLORS.base);
 		const baseBgColors = new Array(simplifiedAltitudes.length).fill(COLORS.baseBackground);
-		
+
 		chart = new Chart(canvasElement, {
 			type: 'line',
 			data: {
@@ -207,7 +207,8 @@
 					tooltip: {
 						callbacks: {
 							title: (items: any) => `Distance: ${items[0].label} ${useImperial ? 'mi' : 'km'}`,
-							label: (item: any) => `Elevation: ${Math.round(item.parsed.y as number)} ${useImperial ? 'ft' : 'm'}`,
+							label: (item: any) =>
+								`Elevation: ${Math.round(item.parsed.y as number)} ${useImperial ? 'ft' : 'm'}`,
 							labelColor: (context: any) => {
 								return {
 									borderColor: COLORS.baseHex,
@@ -279,6 +280,11 @@
 	}
 </script>
 
-<div class="w-full h-full relative" onmouseleave={handleMouseLeave} role="img" aria-label="Elevation chart">
+<div
+	class="w-full h-full relative"
+	onmouseleave={handleMouseLeave}
+	role="img"
+	aria-label="Elevation chart"
+>
 	<canvas bind:this={canvasElement}></canvas>
 </div>

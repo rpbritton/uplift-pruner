@@ -6,28 +6,28 @@ type Theme = 'light' | 'dark';
 // Initialize theme from localStorage or system preference
 function getInitialTheme(): Theme {
 	if (!browser) return 'light';
-	
+
 	const stored = localStorage.getItem('theme') as Theme | null;
 	if (stored === 'light' || stored === 'dark') {
 		return stored;
 	}
-	
+
 	// Check system preference
 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 		return 'dark';
 	}
-	
+
 	// Default to light mode
 	return 'light';
 }
 
 function createThemeStore() {
 	const { subscribe, set, update } = writable<Theme>(getInitialTheme());
-	
+
 	return {
 		subscribe,
 		toggle: () => {
-			update(current => {
+			update((current) => {
 				const newTheme = current === 'light' ? 'dark' : 'light';
 				if (browser) {
 					localStorage.setItem('theme', newTheme);

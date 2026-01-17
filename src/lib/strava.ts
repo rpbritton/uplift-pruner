@@ -91,7 +91,9 @@ export class StravaClient {
 	}
 
 	async getActivityStreams(activityId: string): Promise<any> {
-		const response = await this.fetch(`/activities/${activityId}/streams?keys=time,latlng,distance,altitude,velocity_smooth,heartrate,cadence,watts,temp,moving,grade_smooth&key_by_type=true`);
+		const response = await this.fetch(
+			`/activities/${activityId}/streams?keys=time,latlng,distance,altitude,velocity_smooth,heartrate,cadence,watts,temp,moving,grade_smooth&key_by_type=true`
+		);
 		return response.json();
 	}
 
@@ -107,7 +109,10 @@ export class StravaClient {
 
 	async uploadActivity(fitData: Uint8Array): Promise<{ uploadId: number; activityId?: number }> {
 		const formData = new FormData();
-		formData.append('file', new Blob([new Uint8Array(fitData)], { type: 'application/octet-stream' }));
+		formData.append(
+			'file',
+			new Blob([new Uint8Array(fitData)], { type: 'application/octet-stream' })
+		);
 		formData.append('data_type', 'fit');
 
 		const response = await this.fetch('/uploads', {
@@ -119,10 +124,12 @@ export class StravaClient {
 		return { uploadId: upload.id, activityId: upload.activity_id };
 	}
 
-	async getUploadStatus(uploadId: number): Promise<{ activityId?: number; error?: string; status: string }> {
+	async getUploadStatus(
+		uploadId: number
+	): Promise<{ activityId?: number; error?: string; status: string }> {
 		const response = await this.fetch(`/uploads/${uploadId}`);
 		const status = await response.json();
-		
+
 		return {
 			activityId: status.activity_id,
 			error: status.error,
@@ -130,14 +137,17 @@ export class StravaClient {
 		};
 	}
 
-	async updateActivity(activityId: number, updates: {
-		name?: string;
-		description?: string;
-		gear_id?: string;
-		trainer?: boolean;
-		commute?: boolean;
-		hide_from_home?: boolean;
-	}): Promise<void> {
+	async updateActivity(
+		activityId: number,
+		updates: {
+			name?: string;
+			description?: string;
+			gear_id?: string;
+			trainer?: boolean;
+			commute?: boolean;
+			hide_from_home?: boolean;
+		}
+	): Promise<void> {
 		await this.fetch(`/activities/${activityId}`, {
 			method: 'PUT',
 			headers: {

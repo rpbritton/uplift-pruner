@@ -39,14 +39,19 @@ export const recentActivitiesQuerySchema = z.object({
 /**
  * Validate request body against schema
  */
-export function validateRequest<T>(schema: z.ZodSchema<T>, data: unknown): {
-	success: true;
-	data: T;
-} | {
-	success: false;
-	error: string;
-	details?: z.ZodError;
-} {
+export function validateRequest<T>(
+	schema: z.ZodSchema<T>,
+	data: unknown
+):
+	| {
+			success: true;
+			data: T;
+	  }
+	| {
+			success: false;
+			error: string;
+			details?: z.ZodError;
+	  } {
 	try {
 		const validated = schema.parse(data);
 		return { success: true, data: validated };

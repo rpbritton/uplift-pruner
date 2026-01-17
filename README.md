@@ -27,6 +27,7 @@ npm run dev
 ## Deployment
 
 Deploy to Cloudflare Pages:
+
 - Build command: `npm run build`
 - Output directory: `.svelte-kit/cloudflare`
 

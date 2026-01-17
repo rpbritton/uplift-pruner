@@ -44,7 +44,7 @@
 
 			// Check dark mode and use appropriate tiles
 			const isDarkMode = document.documentElement.classList.contains('dark');
-			
+
 			if (isDarkMode) {
 				// Dark Matter tiles for dark mode
 				L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -146,9 +146,9 @@
 
 					segmentLines.set(index, line);
 				});
-				
+
 				// Bring hover lines to front after adding selected segments
-				hoverSegmentLines.forEach(line => line.bringToFront());
+				hoverSegmentLines.forEach((line) => line.bringToFront());
 			}, 10);
 		}
 
@@ -163,23 +163,22 @@
 		}
 
 		// Remove previous hover lines
-		hoverSegmentLines.forEach(line => line.remove());
+		hoverSegmentLines.forEach((line) => line.remove());
 		hoverSegmentLines = [];
 
 		// Add hover line(s) if there are hovered segments
 		if (hoveredSegment !== null && hoveredSegment.length > 0) {
-			
 			// Capture the current hoveredSegment value for the setTimeout closure
 			const segmentsToHover = [...hoveredSegment];
 			const currentHover = hoveredSegment;
-			
+
 			const addPolylines = () => {
 				// Only render if hoveredSegment hasn't changed
 				if (hoveredSegment !== currentHover) {
 					return;
 				}
-				
-				segmentsToHover.forEach(segmentIndex => {
+
+				segmentsToHover.forEach((segmentIndex) => {
 					const segment = activity.segment_efforts[segmentIndex];
 					if (segment) {
 						const segmentCoords = allCoords.slice(segment.start_index, segment.end_index + 1);
@@ -190,7 +189,7 @@
 								opacity: 0.9,
 								className: 'segment-hover'
 							}).addTo(map);
-							
+
 							// Ensure hover line is always on top
 							line.bringToFront();
 							hoverSegmentLines.push(line);
@@ -198,7 +197,7 @@
 					}
 				});
 			};
-			
+
 			// Only use setTimeout for multiple segments (expensive), render single segments immediately
 			if (segmentsToHover.length > 1) {
 				setTimeout(addPolylines, 10);
@@ -237,7 +236,7 @@
 
 <div class="relative w-full h-full">
 	<div bind:this={mapContainer} class="w-full h-full"></div>
-	
+
 	<!-- Recenter button -->
 	<button
 		onclick={recenterMap}
@@ -256,7 +255,7 @@
 	:global(.dark .leaflet-container) {
 		background: #1e293b;
 	}
-	
+
 	/* Dark mode zoom controls */
 	:global(.dark .leaflet-control-zoom a) {
 		background-color: #1e293b;
@@ -267,7 +266,7 @@
 		background-color: #334155;
 		color: #f1f5f9;
 	}
-	
+
 	/* Dark mode attribution */
 	:global(.dark .leaflet-control-attribution) {
 		background-color: rgba(30, 41, 59, 0.9) !important;

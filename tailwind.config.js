@@ -17,11 +17,11 @@ export default {
 					700: '#0f766e',
 					800: '#115e59',
 					900: '#134e4a',
-					950: '#042f2e',
+					950: '#042f2e'
 				},
 				accent: {
 					amber: '#FBBF24', // Warmer golden hover color
-					red: '#F87171', // Selected/removal color
+					red: '#F87171' // Selected/removal color
 				}
 			}
 		}

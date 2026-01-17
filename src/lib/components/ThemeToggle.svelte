@@ -2,16 +2,16 @@
 	import { Moon, Sun } from 'lucide-svelte';
 	import { theme } from '$lib/stores/theme';
 	import { onMount } from 'svelte';
-	
+
 	let isDark = $state(false);
-	
+
 	onMount(() => {
-		const unsubscribe = theme.subscribe(value => {
+		const unsubscribe = theme.subscribe((value) => {
 			isDark = value === 'dark';
 		});
 		return unsubscribe;
 	});
-	
+
 	function toggleTheme() {
 		theme.toggle();
 	}

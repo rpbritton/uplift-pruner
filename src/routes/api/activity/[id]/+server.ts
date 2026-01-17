@@ -4,20 +4,17 @@ import { getStravaClient } from '$lib/strava';
 
 export const PUT: RequestHandler = async ({ params, cookies, request }) => {
 	const { id } = params;
-	
+
 	const accessToken = cookies.get('strava_access_token');
 	if (!accessToken) {
-		return json(
-			{ error: 'Not authenticated' },
-			{ status: 401 }
-		);
+		return json({ error: 'Not authenticated' }, { status: 401 });
 	}
 
 	try {
 		const updates = await request.json();
 		const client = getStravaClient(accessToken);
 		await client.updateActivity(parseInt(id), updates);
-		
+
 		return json({ success: true });
 	} catch (error: any) {
 		console.error('Update activity error:', error);

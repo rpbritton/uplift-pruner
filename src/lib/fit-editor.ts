@@ -91,7 +91,7 @@ export function removeFitIntervals(
 		laps: fitMessages.lapMessages.length,
 		sessions: fitMessages.sessionMessages.length,
 		intervals: intervals.length,
-		intervalRanges: intervals.map(i => ({
+		intervalRanges: intervals.map((i) => ({
 			start: i.startTime,
 			end: i.endTime,
 			startIndex: i.startIndex,
@@ -103,7 +103,9 @@ export function removeFitIntervals(
 	const laps = splitIntoLaps(fitMessages.recordMessages, intervals);
 
 	if (laps.length === 0) {
-		throw new Error('No activity data remains after removing intervals. All records were filtered out.');
+		throw new Error(
+			'No activity data remains after removing intervals. All records were filtered out.'
+		);
 	}
 
 	// Step 4: Calculate stats for each lap
@@ -148,7 +150,7 @@ function splitIntoLaps(records: any[], intervals: TimeInterval[]): any[][] {
 
 	for (let i = 0; i < records.length; i++) {
 		const record = records[i];
-		
+
 		// Check if this record index is in any interval to remove
 		const inInterval = intervals.some(
 			(interval) => i >= interval.startIndex && i <= interval.endIndex
@@ -174,7 +176,7 @@ function splitIntoLaps(records: any[], intervals: TimeInterval[]): any[][] {
 	console.log('Split into laps:', {
 		totalRecords: records.length,
 		lapsCreated: laps.length,
-		lapSizes: laps.map(l => l.length),
+		lapSizes: laps.map((l) => l.length),
 		intervalsRemoved: intervals.length
 	});
 
@@ -218,7 +220,9 @@ function calculateLapStats(records: any[]): LapStats {
 	// Heart rate
 	const heartRates = records.map((r) => r.heartRate).filter((hr) => hr !== undefined);
 	const avgHeartRate =
-		heartRates.length > 0 ? Math.round(heartRates.reduce((a, b) => a + b, 0) / heartRates.length) : null;
+		heartRates.length > 0
+			? Math.round(heartRates.reduce((a, b) => a + b, 0) / heartRates.length)
+			: null;
 	const maxHeartRate = heartRates.length > 0 ? Math.max(...heartRates) : null;
 	const minHeartRate = heartRates.length > 0 ? Math.min(...heartRates) : null;
 
@@ -233,15 +237,15 @@ function calculateLapStats(records: any[]): LapStats {
 	const avgPower =
 		powers.length > 0 ? Math.round(powers.reduce((a, b) => a + b, 0) / powers.length) : null;
 	const maxPower = powers.length > 0 ? Math.max(...powers) : null;
-	
+
 	// Normalized Power (NP) - 4th root of 30-second moving average of power^4
 	let normalizedPower: number | null = null;
 	if (powers.length > 30) {
-		const powersFourth = powers.map(p => Math.pow(p, 4));
+		const powersFourth = powers.map((p) => Math.pow(p, 4));
 		const avgPowerFourth = powersFourth.reduce((a, b) => a + b, 0) / powersFourth.length;
 		normalizedPower = Math.round(Math.pow(avgPowerFourth, 0.25));
 	}
-	
+
 	// Total Work (joules) - sum of power * time
 	let totalWork: number | null = null;
 	if (avgPower !== null && totalElapsedTime > 0) {
@@ -254,9 +258,10 @@ function calculateLapStats(records: any[]): LapStats {
 		temps.length > 0 ? Math.round(temps.reduce((a, b) => a + b, 0) / temps.length) : null;
 
 	// Calories (rough estimate based on power or HR)
-	const totalCalories = avgPower !== null 
-		? Math.round(avgPower * totalElapsedTime / 1000 * 0.239) // Convert joules to kcal
-		: null;
+	const totalCalories =
+		avgPower !== null
+			? Math.round(((avgPower * totalElapsedTime) / 1000) * 0.239) // Convert joules to kcal
+			: null;
 
 	return {
 		startTime,
@@ -293,13 +298,13 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 
 	const startTime = laps[0].startTime;
 	const endTime = laps[laps.length - 1].endTime;
-	
+
 	// totalElapsedTime is wall-clock time (includes pauses/uplifts)
 	const totalElapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-	
+
 	// totalTimerTime is active time (sum of lap times, excludes pauses)
 	const totalTimerTime = laps.reduce((sum, lap) => sum + lap.totalTimerTime, 0);
-	
+
 	console.log('Session stats calculation:', {
 		lapsCount: laps.length,
 		startTime,
@@ -307,7 +312,7 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 		totalElapsedTime,
 		totalTimerTime
 	});
-	
+
 	const totalDistance = laps.reduce((sum, lap) => sum + lap.totalDistance, 0);
 	const totalAscent = laps.reduce((sum, lap) => sum + lap.totalAscent, 0);
 	const totalDescent = laps.reduce((sum, lap) => sum + lap.totalDescent, 0);
@@ -324,7 +329,7 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 			? Math.round(
 					hrLaps.reduce((sum, lap) => sum + lap.avgHeartRate! * lap.totalTimerTime, 0) /
 						hrLaps.reduce((sum, lap) => sum + lap.totalTimerTime, 0)
-			  )
+				)
 			: null;
 
 	const maxHeartRate =
@@ -340,11 +345,10 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 			? Math.round(
 					cadLaps.reduce((sum, lap) => sum + lap.avgCadence! * lap.totalTimerTime, 0) /
 						cadLaps.reduce((sum, lap) => sum + lap.totalTimerTime, 0)
-			  )
+				)
 			: null;
 
-	const maxCadence =
-		cadLaps.length > 0 ? Math.max(...cadLaps.map((lap) => lap.maxCadence!)) : null;
+	const maxCadence = cadLaps.length > 0 ? Math.max(...cadLaps.map((lap) => lap.maxCadence!)) : null;
 
 	// Average power across all laps (weighted by time)
 	const powerLaps = laps.filter((lap) => lap.avgPower !== null);
@@ -353,9 +357,9 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 			? Math.round(
 					powerLaps.reduce((sum, lap) => sum + lap.avgPower! * lap.totalTimerTime, 0) /
 						powerLaps.reduce((sum, lap) => sum + lap.totalTimerTime, 0)
-			  )
+				)
 			: null;
-	
+
 	// Normalized Power (weighted average)
 	const npLaps = laps.filter((lap) => lap.normalizedPower !== null);
 	const normalizedPower =
@@ -363,9 +367,9 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 			? Math.round(
 					npLaps.reduce((sum, lap) => sum + lap.normalizedPower! * lap.totalTimerTime, 0) /
 						npLaps.reduce((sum, lap) => sum + lap.totalTimerTime, 0)
-			  )
+				)
 			: null;
-	
+
 	// Total Work (sum of all laps)
 	const totalWork = laps.reduce((sum, lap) => sum + (lap.totalWork || 0), 0);
 
@@ -375,9 +379,7 @@ function calculateSessionStats(laps: LapStats[]): Omit<LapStats, 'records'> {
 	const tempLaps = laps.filter((lap) => lap.avgTemperature !== null);
 	const avgTemperature =
 		tempLaps.length > 0
-			? Math.round(
-					tempLaps.reduce((sum, lap) => sum + lap.avgTemperature!, 0) / tempLaps.length
-			  )
+			? Math.round(tempLaps.reduce((sum, lap) => sum + lap.avgTemperature!, 0) / tempLaps.length)
 			: null;
 
 	const totalCalories = laps.reduce((sum, lap) => sum + (lap.totalCalories || 0), 0);
@@ -437,7 +439,7 @@ function encodeFitFile(
 
 	// 3. Write all records with timer start/stop events between laps
 	let cumulativeDistance = 0;
-	
+
 	for (let i = 0; i < laps.length; i++) {
 		const lap = laps[i];
 
@@ -459,16 +461,16 @@ function encodeFitFile(
 			const record = lap.records[j];
 			const originalDistance = record.distance || 0;
 			const distanceInLap = originalDistance - lapStartDistance;
-			
+
 			// Create new record with recalculated cumulative distance
 			const newRecord = {
 				...record,
 				distance: cumulativeDistance + distanceInLap
 			};
-			
+
 			encoder.onMesg(Profile.MesgNum.RECORD, newRecord);
 		}
-		
+
 		// Update cumulative distance for next lap
 		cumulativeDistance += lapDistance;
 
@@ -479,13 +481,13 @@ function encodeFitFile(
 			eventType: 'stopAll',
 			eventGroup: 0
 		});
-		
+
 		// If there's a next lap, insert pause between them
 		if (i < laps.length - 1) {
 			const nextLap = laps[i + 1];
 			const gapStart = lap.endTime;
 			const gapEnd = nextLap.startTime;
-			
+
 			// Only add pause if there's an actual gap
 			if (gapEnd.getTime() - gapStart.getTime() > 1000) {
 				// Pause event at start of gap
@@ -561,13 +563,15 @@ function encodeFitFile(
 	if (sessionStats.maxCadence !== null) sessionMessage.maxCadence = sessionStats.maxCadence;
 	if (sessionStats.avgPower !== null) sessionMessage.avgPower = sessionStats.avgPower;
 	if (sessionStats.maxPower !== null) sessionMessage.maxPower = sessionStats.maxPower;
-	if (sessionStats.normalizedPower !== null) sessionMessage.normalizedPower = sessionStats.normalizedPower;
+	if (sessionStats.normalizedPower !== null)
+		sessionMessage.normalizedPower = sessionStats.normalizedPower;
 	if (sessionStats.totalWork !== null) sessionMessage.totalWork = sessionStats.totalWork;
 	if (sessionStats.avgSpeed !== null) sessionMessage.avgSpeed = sessionStats.avgSpeed;
 	if (sessionStats.maxSpeed !== null) sessionMessage.maxSpeed = sessionStats.maxSpeed;
 	if (sessionStats.totalAscent !== null) sessionMessage.totalAscent = sessionStats.totalAscent;
 	if (sessionStats.totalDescent !== null) sessionMessage.totalDescent = sessionStats.totalDescent;
-	if (sessionStats.avgTemperature !== null) sessionMessage.avgTemperature = sessionStats.avgTemperature;
+	if (sessionStats.avgTemperature !== null)
+		sessionMessage.avgTemperature = sessionStats.avgTemperature;
 
 	encoder.onMesg(Profile.MesgNum.SESSION, sessionMessage);
 

@@ -9,10 +9,12 @@ Uplift Pruner is a privacy-focused tool that helps you remove uplift segments fr
 ## What We Collect
 
 ### Authentication Data
+
 - When you connect your Strava account, we receive an OAuth access token that allows us to access your Strava data on your behalf
 - This token is stored in a session cookie in your browser
 
 ### Activity Data
+
 - We temporarily access your Strava activity data (GPS tracks, segments, elevation, etc.) only when you explicitly select an activity to process
 - This data is processed in real-time in your browser and on our serverless infrastructure
 
@@ -38,14 +40,17 @@ Uplift Pruner is a privacy-focused tool that helps you remove uplift segments fr
 ## Third-Party Services
 
 ### Strava
+
 We connect to Strava via their official API to access your activity data. Your use of Strava is governed by [Strava's Privacy Policy](https://www.strava.com/legal/privacy) and [Terms of Service](https://www.strava.com/legal/terms).
 
 ### Cloudflare Pages
+
 Our application is hosted on Cloudflare Pages. Cloudflare may collect standard web server logs. Please see [Cloudflare's Privacy Policy](https://www.cloudflare.com/privacypolicy/) for more information.
 
 ## Your Rights
 
 You have the right to:
+
 - Access your data by logging into your Strava account
 - Revoke access at any time by disconnecting the app in your [Strava settings](https://www.strava.com/settings/apps)
 - Request deletion of your session data by logging out
@@ -71,6 +76,7 @@ If you have questions about this Privacy Policy, please open an issue on our [Gi
 ## Compliance
 
 This privacy policy is designed to comply with:
+
 - General Data Protection Regulation (GDPR)
 - California Consumer Privacy Act (CCPA)
 - Strava API Agreement requirements

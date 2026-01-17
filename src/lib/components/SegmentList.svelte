@@ -11,9 +11,14 @@
 		segmentElevationGains?: number[];
 	}
 
-	let { segments, selectedSegments, useImperial = false, segmentElevationGains = [] }: Props = $props();
+	let {
+		segments,
+		selectedSegments,
+		useImperial = false,
+		segmentElevationGains = []
+	}: Props = $props();
 
-	const dispatch = createEventDispatcher<{ 
+	const dispatch = createEventDispatcher<{
 		segmentToggle: { index: number; selected: boolean };
 		selectAllInstances: { segmentId: number };
 		segmentHover: number[] | null;
@@ -46,7 +51,7 @@
 		if (touchTimer) {
 			clearTimeout(touchTimer);
 		}
-		
+
 		// Start a timer for long press (300ms)
 		touchTimer = setTimeout(() => {
 			activeTouch = index;
@@ -60,7 +65,7 @@
 			clearTimeout(touchTimer);
 			touchTimer = null;
 		}
-		
+
 		// Clear hover after a delay to see the effect
 		setTimeout(() => {
 			if (activeTouch !== null) {
@@ -126,20 +131,20 @@
 
 	// Count instances of each segment
 	function getInstanceCount(segmentId: number): number {
-		return segments.filter(s => s.segment.id === segmentId).length;
+		return segments.filter((s) => s.segment.id === segmentId).length;
 	}
 </script>
 
 <div class="space-y-2">
-		{#if segments.length === 0}
-			<div class="text-center py-12">
-				<Mountain class="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
-				<p class="text-slate-600 dark:text-slate-400">No matched segments found in this activity</p>
-			</div>
-		{:else}
+	{#if segments.length === 0}
+		<div class="text-center py-12">
+			<Mountain class="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto mb-3" />
+			<p class="text-slate-600 dark:text-slate-400">No matched segments found in this activity</p>
+		</div>
+	{:else}
 		{#each segments as segment, index}
 			{@const instanceCount = getInstanceCount(segment.segment.id)}
-			<label 
+			<label
 				class="block p-4 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition-colors"
 				class:ring-2={activeTouch === index}
 				class:ring-primary-500={activeTouch === index}
@@ -154,17 +159,20 @@
 				<div class="flex items-start gap-3">
 					<input
 						type="checkbox"
-					checked={selectedSegments.includes(index)}
+						checked={selectedSegments.includes(index)}
 						onchange={(e) => handleToggle(index, e.currentTarget.checked)}
 						class="mt-1 w-4 h-4 rounded accent-primary-600 dark:accent-primary-500 opacity-90 dark:opacity-80"
-					style="accent-color: {COLORS.baseHex};"
+						style="accent-color: {COLORS.baseHex};"
 					/>
 					<div class="flex-1">
 						<div class="flex items-start justify-between gap-2">
 							<div class="flex items-center gap-1.5 flex-1">
 								<h3 class="font-semibold text-slate-900 dark:text-slate-100">{segment.name}</h3>
 								{#if segment.segment.private}
-									<span class="inline-block" title="Private segment - Only you can see and select this segment">
+									<span
+										class="inline-block"
+										title="Private segment - Only you can see and select this segment"
+									>
 										<Lock class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
 									</span>
 								{/if}
@@ -194,5 +202,5 @@
 				</div>
 			</label>
 		{/each}
-		{/if}
+	{/if}
 </div>

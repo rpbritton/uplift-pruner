@@ -27,54 +27,54 @@ function mapStravaTypeToFitSport(sportType: string): { sport: number; sub_sport:
 	const type = sportType?.toLowerCase() || '';
 	const mapping: { [key: string]: { sport: number; sub_sport: number } } = {
 		// Cycling (sport: 2)
-		'ride': { sport: 2, sub_sport: 0 },
-		'mountainbikeride': { sport: 2, sub_sport: 8 },
-		'gravelride': { sport: 2, sub_sport: 46 },
-		'ebikeride': { sport: 21, sub_sport: 0 },
-		'emountainbikeride': { sport: 21, sub_sport: 8 },
-		'velomobile': { sport: 2, sub_sport: 0 },
-		'virtualride': { sport: 2, sub_sport: 10 },
-		'handcycle': { sport: 2, sub_sport: 14 },
-		'cycling': { sport: 2, sub_sport: 0 },
-		'biking': { sport: 2, sub_sport: 0 },
-		
+		ride: { sport: 2, sub_sport: 0 },
+		mountainbikeride: { sport: 2, sub_sport: 8 },
+		gravelride: { sport: 2, sub_sport: 46 },
+		ebikeride: { sport: 21, sub_sport: 0 },
+		emountainbikeride: { sport: 21, sub_sport: 8 },
+		velomobile: { sport: 2, sub_sport: 0 },
+		virtualride: { sport: 2, sub_sport: 10 },
+		handcycle: { sport: 2, sub_sport: 14 },
+		cycling: { sport: 2, sub_sport: 0 },
+		biking: { sport: 2, sub_sport: 0 },
+
 		// Running (sport: 1)
-		'run': { sport: 1, sub_sport: 0 },
-		'trailrun': { sport: 1, sub_sport: 3 },
-		'virtualrun': { sport: 1, sub_sport: 10 },
-		'running': { sport: 1, sub_sport: 0 },
-		'treadmillrun': { sport: 1, sub_sport: 1 },
-		
+		run: { sport: 1, sub_sport: 0 },
+		trailrun: { sport: 1, sub_sport: 3 },
+		virtualrun: { sport: 1, sub_sport: 10 },
+		running: { sport: 1, sub_sport: 0 },
+		treadmillrun: { sport: 1, sub_sport: 1 },
+
 		// Walking & Hiking
-		'walk': { sport: 11, sub_sport: 0 },
-		'walking': { sport: 11, sub_sport: 0 },
-		'hike': { sport: 17, sub_sport: 0 },
-		'hiking': { sport: 17, sub_sport: 0 },
-		
+		walk: { sport: 11, sub_sport: 0 },
+		walking: { sport: 11, sub_sport: 0 },
+		hike: { sport: 17, sub_sport: 0 },
+		hiking: { sport: 17, sub_sport: 0 },
+
 		// Swimming (sport: 5)
-		'swim': { sport: 5, sub_sport: 0 },
-		'swimming': { sport: 5, sub_sport: 0 },
-		'openwater': { sport: 5, sub_sport: 2 },
-		'pool': { sport: 5, sub_sport: 0 },
-		
+		swim: { sport: 5, sub_sport: 0 },
+		swimming: { sport: 5, sub_sport: 0 },
+		openwater: { sport: 5, sub_sport: 2 },
+		pool: { sport: 5, sub_sport: 0 },
+
 		// Winter Sports
-		'alpineski': { sport: 13, sub_sport: 0 },
-		'backcountryski': { sport: 13, sub_sport: 2 },
-		'downhillski': { sport: 13, sub_sport: 0 },
-		'skiing': { sport: 13, sub_sport: 0 },
-		'nordicski': { sport: 12, sub_sport: 0 },
-		'crosscountryskiing': { sport: 12, sub_sport: 0 },
-		'rollerski': { sport: 12, sub_sport: 0 },
-		'snowboard': { sport: 14, sub_sport: 0 },
-		'snowboarding': { sport: 14, sub_sport: 0 },
-		'snowshoe': { sport: 35, sub_sport: 0 },
-		'snowshoeing': { sport: 35, sub_sport: 0 },
-		'iceskate': { sport: 33, sub_sport: 0 },
-		'iceskating': { sport: 33, sub_sport: 0 },
-		
+		alpineski: { sport: 13, sub_sport: 0 },
+		backcountryski: { sport: 13, sub_sport: 2 },
+		downhillski: { sport: 13, sub_sport: 0 },
+		skiing: { sport: 13, sub_sport: 0 },
+		nordicski: { sport: 12, sub_sport: 0 },
+		crosscountryskiing: { sport: 12, sub_sport: 0 },
+		rollerski: { sport: 12, sub_sport: 0 },
+		snowboard: { sport: 14, sub_sport: 0 },
+		snowboarding: { sport: 14, sub_sport: 0 },
+		snowshoe: { sport: 35, sub_sport: 0 },
+		snowshoeing: { sport: 35, sub_sport: 0 },
+		iceskate: { sport: 33, sub_sport: 0 },
+		iceskating: { sport: 33, sub_sport: 0 }
+
 		// Add more as needed...
 	};
-	
+
 	return mapping[type] || { sport: 0, sub_sport: 0 };
 }
 
@@ -98,8 +98,8 @@ export function generateFitFromStrava(
 	const encoder = new Encoder();
 	const { sport, sub_sport } = mapStravaTypeToFitSport(activity.sport_type || activity.type);
 	const deviceName = activity.device_name || 'Uplift Pruner';
-	const productName = deviceName.includes('Uplift Pruner') 
-		? deviceName 
+	const productName = deviceName.includes('Uplift Pruner')
+		? deviceName
 		: `${deviceName} x Uplift Pruner`;
 
 	// 1. File ID (required)
@@ -142,7 +142,8 @@ export function generateFitFromStrava(
 		// Other fields
 		if (streams.altitude?.data?.[i] !== undefined) record.altitude = streams.altitude.data[i];
 		if (streams.distance?.data?.[i] !== undefined) record.distance = streams.distance.data[i];
-		if (streams.velocity_smooth?.data?.[i] !== undefined) record.speed = streams.velocity_smooth.data[i];
+		if (streams.velocity_smooth?.data?.[i] !== undefined)
+			record.speed = streams.velocity_smooth.data[i];
 		if (streams.heartrate?.data?.[i] !== undefined) record.heartRate = streams.heartrate.data[i];
 		if (streams.cadence?.data?.[i] !== undefined) record.cadence = streams.cadence.data[i];
 		if (streams.watts?.data?.[i] !== undefined) record.power = streams.watts.data[i];

@@ -57,14 +57,18 @@
 				<TrendingUp class="w-5 h-5 text-slate-400 dark:text-slate-500" />
 				<div>
 					<div class="text-sm text-slate-600 dark:text-slate-400">Elevation Gain</div>
-					<div class="font-semibold text-slate-900 dark:text-slate-100">{formatElevation(activity.total_elevation_gain)}</div>
+					<div class="font-semibold text-slate-900 dark:text-slate-100">
+						{formatElevation(activity.total_elevation_gain)}
+					</div>
 				</div>
 			</div>
 			<div class="flex items-center gap-3">
 				<Clock class="w-5 h-5 text-slate-400 dark:text-slate-500" />
 				<div>
 					<div class="text-sm text-slate-600 dark:text-slate-400">Moving Time</div>
-					<div class="font-semibold text-slate-900 dark:text-slate-100">{formatTime(activity.moving_time)}</div>
+					<div class="font-semibold text-slate-900 dark:text-slate-100">
+						{formatTime(activity.moving_time)}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -74,65 +78,59 @@
 	<div>
 		<h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">After</h3>
 		{#if selectedSegments.length > 0}
-		<div class="space-y-3">
-			<div class="flex items-center gap-3">
-				<Activity class="w-5 h-5 text-primary-600 dark:text-primary-500" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Distance</div>
-					<div class="font-semibold text-primary-600 dark:text-primary-500">
-						{formatDistance(activity.distance - removedStats.distance)}
+			<div class="space-y-3">
+				<div class="flex items-center gap-3">
+					<Activity class="w-5 h-5 text-primary-600 dark:text-primary-500" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Distance</div>
+						<div class="font-semibold text-primary-600 dark:text-primary-500">
+							{formatDistance(activity.distance - removedStats.distance)}
+						</div>
+					</div>
+				</div>
+				<div class="flex items-center gap-3">
+					<TrendingUp class="w-5 h-5 text-primary-600 dark:text-primary-500" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Elevation Gain</div>
+						<div class="font-semibold text-primary-600 dark:text-primary-500">
+							{formatElevation(activity.total_elevation_gain - removedStats.elevation)}
+						</div>
+					</div>
+				</div>
+				<div class="flex items-center gap-3">
+					<Clock class="w-5 h-5 text-primary-600 dark:text-primary-500" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Moving Time</div>
+						<div class="font-semibold text-primary-600 dark:text-primary-500">
+							{formatTime(activity.moving_time - removedStats.time)}
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="flex items-center gap-3">
-				<TrendingUp class="w-5 h-5 text-primary-600 dark:text-primary-500" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Elevation Gain</div>
-					<div class="font-semibold text-primary-600 dark:text-primary-500">
-						{formatElevation(activity.total_elevation_gain - removedStats.elevation)}
-					</div>
-				</div>
-			</div>
-			<div class="flex items-center gap-3">
-				<Clock class="w-5 h-5 text-primary-600 dark:text-primary-500" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Moving Time</div>
-					<div class="font-semibold text-primary-600 dark:text-primary-500">
-						{formatTime(activity.moving_time - removedStats.time)}
-					</div>
-				</div>
-			</div>
-		</div>
 		{:else}
-		<div class="space-y-3">
-			<div class="flex items-center gap-3">
-				<Activity class="w-5 h-5 text-slate-300 dark:text-slate-600" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Distance</div>
-					<div class="font-semibold text-slate-400 dark:text-slate-500">
-						—
+			<div class="space-y-3">
+				<div class="flex items-center gap-3">
+					<Activity class="w-5 h-5 text-slate-300 dark:text-slate-600" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Distance</div>
+						<div class="font-semibold text-slate-400 dark:text-slate-500">—</div>
+					</div>
+				</div>
+				<div class="flex items-center gap-3">
+					<TrendingUp class="w-5 h-5 text-slate-300 dark:text-slate-600" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Elevation Gain</div>
+						<div class="font-semibold text-slate-400 dark:text-slate-500">—</div>
+					</div>
+				</div>
+				<div class="flex items-center gap-3">
+					<Clock class="w-5 h-5 text-slate-300 dark:text-slate-600" />
+					<div>
+						<div class="text-sm text-slate-600 dark:text-slate-400">Moving Time</div>
+						<div class="font-semibold text-slate-400 dark:text-slate-500">—</div>
 					</div>
 				</div>
 			</div>
-			<div class="flex items-center gap-3">
-				<TrendingUp class="w-5 h-5 text-slate-300 dark:text-slate-600" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Elevation Gain</div>
-					<div class="font-semibold text-slate-400 dark:text-slate-500">
-						—
-					</div>
-				</div>
-			</div>
-			<div class="flex items-center gap-3">
-				<Clock class="w-5 h-5 text-slate-300 dark:text-slate-600" />
-				<div>
-					<div class="text-sm text-slate-600 dark:text-slate-400">Moving Time</div>
-					<div class="font-semibold text-slate-400 dark:text-slate-500">
-						—
-					</div>
-				</div>
-			</div>
-		</div>
 		{/if}
 	</div>
 </div>
