@@ -1,7 +1,7 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
-import { PUBLIC_STRAVA_CLIENT_ID } from '$env/static/public';
-import { STRAVA_CLIENT_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/public';
+import { env as privateEnv } from '$env/dynamic/private';
 
 const STRAVA_TOKEN_URL = 'https://www.strava.com/oauth/token';
 
@@ -14,8 +14,8 @@ export const POST: RequestHandler = async ({ request, cookies, platform }) => {
 		return json({ error: 'Invalid state parameter' }, { status: 400 });
 	}
 
-	const clientId = PUBLIC_STRAVA_CLIENT_ID;
-	const clientSecret = STRAVA_CLIENT_SECRET;
+	const clientId = env.PUBLIC_STRAVA_CLIENT_ID;
+	const clientSecret = privateEnv.STRAVA_CLIENT_SECRET;
 
 	if (!clientId || !clientSecret) {
 		return json({ error: 'Strava credentials not configured' }, { status: 500 });

@@ -1,11 +1,11 @@
 import type { RequestHandler } from './$types';
 import { json, redirect } from '@sveltejs/kit';
-import { PUBLIC_STRAVA_CLIENT_ID } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 const STRAVA_AUTH_URL = 'https://www.strava.com/oauth/authorize';
 
 export const GET: RequestHandler = async ({ url }) => {
-	const clientId = PUBLIC_STRAVA_CLIENT_ID;
+	const clientId = env.PUBLIC_STRAVA_CLIENT_ID;
 	// Use request origin for redirect URI (works for both localhost and production)
 	const redirectUri = `${url.origin}/callback`;
 
