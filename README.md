@@ -1,4 +1,6 @@
-# <img src="static/icon.svg" alt="Uplift Pruner Logo" width="48" style="vertical-align: middle;"> Uplift Pruner
+<img src="static/icon.svg" alt="Uplift Pruner Logo" width="160">
+
+# Uplift Pruner
 
 A tool to remove chairlift and shuttle segments from mountain bike activities to show accurate riding stats.
 
