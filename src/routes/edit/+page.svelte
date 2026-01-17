@@ -78,7 +78,6 @@
 	let componentsReady = $state(false);
 	let hoverPoint = $state<{ lat: number; lng: number } | null>(null);
 	let refreshingSegments = $state(false);
-	let includeStatsInDescription = $state(true);
 
 	// Pre-calculated net elevation for each segment (for display)
 	let segmentElevationGains = $state<number[]>([]);
@@ -426,7 +425,7 @@
 					fitFile,
 					stats: activityStats,
 					useImperial: activity.athlete?.measurement_preference === 'feet',
-					includeStats: includeStatsInDescription,
+					includeStats: true,
 					metadata: {
 						name: activity.name,
 						description: activity.description,
@@ -743,20 +742,6 @@
 					</div>
 				</div>
 
-				<!-- Options -->
-				<div class="mb-3">
-					<label class="flex items-center gap-2 cursor-pointer">
-						<input
-							type="checkbox"
-							bind:checked={includeStatsInDescription}
-							class="w-4 h-4 text-primary-600 bg-slate-100 border-slate-300 rounded focus:ring-primary-500 focus:ring-2 dark:bg-slate-700 dark:border-slate-600"
-						/>
-						<span class="text-sm text-slate-700 dark:text-slate-300">
-							Include stats in description
-						</span>
-					</label>
-				</div>
-
 				<!-- Action Buttons -->
 				<div class="flex gap-2 mb-2">
 					<button
@@ -897,16 +882,7 @@
 
 							<!-- Separator -->
 							<div class="border-t border-slate-300 dark:border-slate-600 my-1"></div>
-							<label class="flex items-center gap-2 cursor-pointer px-1">
-								<input
-									type="checkbox"
-									bind:checked={includeStatsInDescription}
-									class="w-4 h-4 text-primary-600 bg-slate-100 border-slate-300 rounded focus:ring-primary-500 focus:ring-2 dark:bg-slate-700 dark:border-slate-600"
-								/>
-								<span class="text-sm text-slate-700 dark:text-slate-300">
-									Include stats in description
-								</span>
-							</label>
+
 							<button
 								onclick={handleUpload}
 								disabled={processing || selectedSegments.length === 0}

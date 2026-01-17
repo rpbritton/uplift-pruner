@@ -124,7 +124,6 @@
 								onclick={() => onClose(true)}
 								class="flex-1 flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-medium px-4 py-2.5 rounded-lg transition-colors"
 							>
-								<Check class="w-4 h-4" />
 								I've Deleted It
 							</button>
 							<button
