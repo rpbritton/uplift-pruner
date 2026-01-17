@@ -23,7 +23,7 @@ function generateActivityDescription(
 	// Add original description if it exists
 	if (originalDescription && originalDescription.trim()) {
 		lines.push(originalDescription.trim());
-		lines.push('----------');
+		lines.push('');
 	}
 
 	// Add stats section - all on one line
