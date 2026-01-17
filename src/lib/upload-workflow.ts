@@ -50,7 +50,7 @@ function generateActivityDescription(
 	}
 
 	// Add stats section - all on one line
-	const statsLine = `${stats.numLaps} laps, ${formatElevation(stats.totalDescent, useImperial)} descent`;
+	const statsLine = `${stats.numSignificantLaps} laps, ${formatElevation(stats.totalDescent, useImperial)} descent`;
 	lines.push(statsLine);
 	lines.push('https://uplift-pruner.rbritton.dev');
 
@@ -98,6 +98,7 @@ export interface UploadOptions {
 	fitFile: Uint8Array;
 	stats?: ActivityStats;
 	useImperial?: boolean;
+	includeStats?: boolean;
 	metadata: {
 		name?: string;
 		description?: string;
@@ -112,7 +113,15 @@ export async function runUploadWorkflow(
 	options: UploadOptions,
 	callbacks: UploadCallbacks
 ): Promise<void> {
-	const { activityId, selectedSegments, fitFile, metadata, stats, useImperial = false } = options;
+	const {
+		activityId,
+		selectedSegments,
+		fitFile,
+		metadata,
+		stats,
+		useImperial = false,
+		includeStats = true
+	} = options;
 	const { onStateChange, onWaitForConfirmation } = callbacks;
 
 	try {
@@ -241,9 +250,9 @@ export async function runUploadWorkflow(
 			message: 'Updating activity details...'
 		});
 
-		// Generate enhanced description with stats if available
+		// Generate enhanced description with stats if available and requested
 		const updatedMetadata = { ...metadata };
-		if (stats) {
+		if (stats && includeStats) {
 			updatedMetadata.description = generateActivityDescription(
 				stats,
 				useImperial,

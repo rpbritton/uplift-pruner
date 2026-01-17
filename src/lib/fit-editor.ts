@@ -42,6 +42,7 @@ interface LapStats {
 
 export interface ActivityStats {
 	numLaps: number;
+	numSignificantLaps: number;
 	totalDistance: number;
 	totalAscent: number;
 	totalDescent: number;
@@ -124,6 +125,22 @@ export function removeFitIntervals(
 	// Step 5: Calculate session stats from all laps
 	const sessionStats = calculateSessionStats(lapStats);
 
+	// Step 5.5: Count significant laps (laps with meaningful descent)
+	const SIGNIFICANT_DESCENT_THRESHOLD = 50; // meters
+	const numSignificantLaps = lapStats.filter(
+		(lap) => lap.totalDescent > SIGNIFICANT_DESCENT_THRESHOLD
+	).length;
+
+	console.log('Significant laps:', {
+		total: lapStats.length,
+		significant: numSignificantLaps,
+		lapDescents: lapStats.map((lap, i) => ({
+			lapNum: i + 1,
+			descent: lap.totalDescent,
+			significant: lap.totalDescent > SIGNIFICANT_DESCENT_THRESHOLD
+		}))
+	});
+
 	// Step 6: Re-encode FIT file
 	const fitFile = encodeFitFile(fitMessages, lapStats, sessionStats, sport, subSport);
 
@@ -132,6 +149,7 @@ export function removeFitIntervals(
 		fitFile,
 		stats: {
 			numLaps: lapStats.length,
+			numSignificantLaps,
 			totalDistance: sessionStats.totalDistance,
 			totalAscent: sessionStats.totalAscent,
 			totalDescent: sessionStats.totalDescent,
