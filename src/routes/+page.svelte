@@ -17,8 +17,7 @@
 	>
 		<div class="max-w-4xl mx-auto px-4 sm:px-6 py-3">
 			<p class="text-sm text-center text-yellow-800 dark:text-yellow-200">
-				This app is awaiting Strava approval and is currently limited to one user. Please check
-				back soon for full availability.
+				Awaiting Strava app review. Currently limited to one user.
 			</p>
 		</div>
 	</div>
