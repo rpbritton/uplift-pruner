@@ -13,6 +13,25 @@ function formatElevation(meters: number, useImperial: boolean): string {
 	return `${Math.round(meters).toLocaleString()} m`;
 }
 
+function convertToDownhillTitle(title: string): string {
+	// Default Strava mountain bike activity names
+	const defaultNames = [
+		'Morning Mountain Bike Ride',
+		'Afternoon Mountain Bike Ride',
+		'Evening Mountain Bike Ride',
+		'Night Mountain Bike Ride'
+	];
+
+	for (const defaultName of defaultNames) {
+		if (title === defaultName) {
+			return title.replace('Mountain Bike Ride', 'Downhill Mountain Bike Ride');
+		}
+	}
+
+	// Return original title if it doesn't match default pattern
+	return title;
+}
+
 function generateActivityDescription(
 	stats: ActivityStats,
 	useImperial: boolean,
@@ -236,6 +255,11 @@ export async function runUploadWorkflow(
 				useImperial,
 				metadata.description
 			);
+		}
+
+		// Update activity name to indicate it's a downhill ride if it uses default Strava naming
+		if (updatedMetadata.name) {
+			updatedMetadata.name = convertToDownhillTitle(updatedMetadata.name);
 		}
 
 		await fetchWithTimeout(`/api/activity/${newActivityId}`, {
