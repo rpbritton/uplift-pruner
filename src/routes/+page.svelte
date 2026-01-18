@@ -12,9 +12,7 @@
 
 <div class="min-h-[100dvh] bg-slate-50 dark:bg-slate-900 flex flex-col">
 	<!-- Pending Verification Banner -->
-	<div
-		class="bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-800"
-	>
+	<div class="bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-800">
 		<div class="max-w-4xl mx-auto px-4 sm:px-6 py-3">
 			<p class="text-sm text-center text-yellow-800 dark:text-yellow-200">
 				Awaiting Strava app review. Currently limited to one user.
