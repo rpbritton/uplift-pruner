@@ -10,7 +10,7 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
+<div class="min-h-[100dvh] bg-slate-50 dark:bg-slate-900 flex flex-col">
 	<!-- Pending Verification Banner -->
 	<div
 		class="bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-800"

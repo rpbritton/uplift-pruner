@@ -492,7 +492,7 @@
 	}
 </script>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
+<div class="min-h-[100dvh] bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
 	{#if loading || !componentsReady}
 		<div
 			class="flex items-center justify-center h-screen absolute inset-0 bg-slate-50 dark:bg-slate-900 z-[9999]"

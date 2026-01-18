@@ -46,7 +46,7 @@
 	<title>Select Activity - Uplift Pruner</title>
 </svelte:head>
 
-<div class="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col">
+<div class="min-h-[100dvh] bg-slate-50 dark:bg-slate-900 flex flex-col">
 	<div class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 w-full">
 		<!-- Header -->
 		<div
