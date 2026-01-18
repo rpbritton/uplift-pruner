@@ -6,6 +6,8 @@ A tool to remove chairlift and shuttle segments from mountain bike activities to
 
 **Website**: https://uplift-pruner.rbritton.dev
 
+![Editor Screenshot](static/editor-screenshot.png)
+
 ## How It Works
 
 1. Connect your Strava account
