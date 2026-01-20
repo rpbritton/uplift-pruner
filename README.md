@@ -24,7 +24,7 @@ npm run dev
 
 ## Environment Variables
 
-- `STRAVA_CLIENT_ID`
+- `PUBLIC_STRAVA_CLIENT_ID`
 - `STRAVA_CLIENT_SECRET`
 - `SESSION_SECRET`
 
